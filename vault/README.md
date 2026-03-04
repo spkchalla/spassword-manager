@@ -36,23 +36,28 @@ vault/
 ├── src/
 │   ├── main.rs
 │   ├── cli.rs
+│   ├── commands.rs          ← module root: re-exports command submodules
 │   ├── commands/
-│   │   ├── mod.rs
-│   │   ├── init.rs
 │   │   ├── add.rs
-│   │   ├── list.rs
+│   │   ├── delete.rs
 │   │   ├── get.rs
-│   │   └── delete.rs
+│   │   ├── init.rs
+│   │   └── list.rs
+│   ├── core.rs              ← module root: re-exports core submodules
 │   ├── core/
-│   │   ├── mod.rs
+│   │   ├── errors.rs
 │   │   ├── models.rs
-│   │   ├── vault_format.rs
-│   │   └── errors.rs
+│   │   └── vault_format.rs
+│   ├── storage.rs           ← module root: re-exports storage submodules
 │   └── storage/
-│       ├── mod.rs
 │       └── file_io.rs
 └── README.md
 ```
+
+> **Note**: This project uses Rust's file-based module system.
+> Each `<module>.rs` file at the `src/` level acts as the module root and
+> re-exports its submodules from the corresponding `<module>/` subdirectory.
+> There are no `mod.rs` files.
 
 ---
 
@@ -64,7 +69,7 @@ vault/
 * Manages dependencies
 * Configures build settings
 
-This project uses stable Rust only.
+This project uses stable Rust only (edition 2024).
 
 ---
 
@@ -81,6 +86,8 @@ Responsibilities:
 This file should remain thin.
 It should not contain business logic.
 
+**Current status**: stub — declares all top-level modules (`cli`, `commands`, `core`, `storage`).
+
 ---
 
 ## src/cli.rs
@@ -92,6 +99,22 @@ Responsible for:
 
 This layer only interprets user intent.
 It does not manipulate vault data directly.
+
+**Current status**: empty stub.
+
+---
+
+## src/commands.rs
+
+Module root for the `commands` module.
+
+Re-exports submodules:
+
+* `add`
+* `delete`
+* `get`
+* `init`
+* `list`
 
 ---
 
@@ -126,6 +149,21 @@ Commands should:
 * Return structured errors
 * Avoid direct file format manipulation
 
+**Current status**: all command files are empty stubs.
+
+---
+
+## src/core.rs
+
+Module root for the `core` module.
+
+Currently re-exports:
+
+* `errors`
+* `vault_format`
+
+> `models` exists as a file (`core/models.rs`) but is not yet declared in `core.rs`.
+
 ---
 
 ## src/core/
@@ -137,10 +175,6 @@ No direct filesystem assumptions.
 
 Pure domain logic only.
 
-### mod.rs
-
-Exports core modules for external use.
-
 ### models.rs
 
 Defines core data structures:
@@ -151,6 +185,8 @@ Defines core data structures:
 These structs represent in-memory representations of vault data.
 
 They do NOT contain file IO logic.
+
+**Current status**: empty stub (not yet re-exported from `core.rs`).
 
 ---
 
@@ -173,6 +209,8 @@ Rules enforced here:
 
 This file defines the on-disk format contract.
 
+**Current status**: empty stub.
+
 ---
 
 ### errors.rs
@@ -194,15 +232,23 @@ Result<T, VaultError>
 
 No unwrap or panic in core logic.
 
+**Current status**: empty stub.
+
+---
+
+## src/storage.rs
+
+Module root for the `storage` module.
+
+Re-exports submodules:
+
+* `file_io`
+
 ---
 
 ## src/storage/
 
 This module handles interaction with the filesystem.
-
-### mod.rs
-
-Exports storage functionality.
 
 ### file_io.rs
 
@@ -215,6 +261,8 @@ Responsible for:
 
 This module does NOT define format logic.
 It only moves bytes between disk and memory.
+
+**Current status**: empty stub.
 
 ---
 
@@ -266,7 +314,7 @@ Each milestone should be committed independently.
 After creating the repository, follow this order:
 
 1. Create folder structure and make the project compile.
-2. Implement `Entry` and optional `Vault` structs in `models.rs`.
+2. Implement `Entry` and optional `Vault` structs in `models.rs`; re-export `models` from `core.rs`.
 3. Define `VaultError` enum and integrate `Result` return types.
 4. Implement header serialization and deserialization.
 5. Implement entry serialization and deserialization with round-trip testing.
@@ -298,4 +346,3 @@ This project serves as:
 The focus is correctness, structure, and clarity.
 
 Security hardening comes in later versions.
-
