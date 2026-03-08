@@ -1,27 +1,21 @@
 use crate::core::models::{Credential, Vault};
 
-pub fn createEmptyVault () ->Vault{
+pub fn create_empty_vault()-> Vault{
     Vault{
         entries: Vec::new(),
     }
-}
 
-pub fn addEntry (vault: &mut Vault, service: String, username: String, password: String) -> {
+}
+// using the &mut here to edit the vault
+pub fn add_entry(vault: &mut Vault, service: String, username: String, password: String) {
     let credential = Credential{
         service,
         username,
         password,
-    };
+    }
     vault.entries.push(credential);
 }
-
-pub fn listEntries(vault: &Vault) -> &[Credential] {
+//using the &Vault to just see it, not tamper or edit it.
+pub fn list_entries(vault: &Vault) ->&[Credential]{
     &vault.entries
-}
-
-pub fn findCredential(vault: Vault, service: String) -> Option<&Credential> {
-    vault
-        .entries
-        .iter()
-        .find(|entry| entry.service == service)
 }
