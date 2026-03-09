@@ -12,7 +12,7 @@ pub fn add_entry(vault: &mut Vault, service: String, username: String, password:
         service,
         username,
         password,
-    }
+    };
     vault.entries.push(credential);
 }
 //using the &Vault to just see it, not tamper or edit it.

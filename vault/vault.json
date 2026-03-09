@@ -1,0 +1,14 @@
+{
+  "entries": [
+    {
+      "service": "git",
+      "username": "spk",
+      "password": "myp"
+    },
+    {
+      "service": "google",
+      "username": "spk",
+      "password": "mypt"
+    }
+  ]
+}

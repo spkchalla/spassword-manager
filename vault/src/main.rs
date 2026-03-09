@@ -3,18 +3,18 @@ mod commands;
 mod core;
 mod storage;
 
-use cli::{CliCommand, parse_cli}
+use cli::{CliCommand, parse_cli};
 
 fn main() {
     let command = parse_cli();
     match command {
-        CliCommand::init =>{
+        CliCommand::Init =>{
             commands::init::execute();
         }
-        CliCommand::add {service, username, password} =>{
+        CliCommand::Add {service, username, password} =>{
             commands::add::execute(service, username, password);
         }
-        CliCommand::list =>{
+        CliCommand::List =>{
             commands::list::execute();
         }
     }
