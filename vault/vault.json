@@ -9,6 +9,11 @@
       "service": "google",
       "username": "spk",
       "password": "mypt"
+    },
+    {
+      "service": "tradeaikya",
+      "username": "spk",
+      "password": "spk"
     }
   ]
 }
