@@ -8,6 +8,12 @@ pub enum CliCommand {
         password: String,
     },
     List,
+    Get {
+        service: String,
+    },
+    Delete {
+        service: String,
+    },
 }
 
 pub fn parse_cli () -> CliCommand {
@@ -32,6 +38,22 @@ pub fn parse_cli () -> CliCommand {
         }
         "list" => CliCommand::List,
 
+        "get" => {
+            if args.len() != 3 {
+                panic!("Usage: vault get <service>");
+            }
+            CliCommand::Get {
+                service: args[2].clone(),
+            }
+        }
+        "delete" => {
+            if args.len() != 3 {
+                panic!("Usage: vault delete <service>");
+            }
+            CliCommand::Delete {
+                service: args[2].clone(),
+            }
+        }
 
         _ => panic! ("Unknown command")
     }

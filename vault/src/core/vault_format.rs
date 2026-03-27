@@ -19,3 +19,16 @@ pub fn add_entry(vault: &mut Vault, service: String, username: String, password:
 pub fn list_entries(vault: &Vault) ->&[Credential]{
     &vault.entries
 }
+
+pub fn get_entry<'a>(vault: &'a Vault, service: &str) -> Option<&'a Credential> {
+    vault.entries.iter().find(|entry| entry.service == service)
+}
+
+pub fn delete_entry(vault: &mut Vault, service: &str) -> bool {
+    if let Some(pos) = vault.entries.iter().position(|entry| entry.service == service) {
+        vault.entries.remove(pos);
+        true
+    } else {
+        false
+    }
+}
