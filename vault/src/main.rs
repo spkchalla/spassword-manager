@@ -17,5 +17,11 @@ fn main() {
         CliCommand::List =>{
             commands::list::execute();
         }
+        CliCommand::Get {service} =>{
+            commands::get::execute(service);
+        }
+        CliCommand::Delete {service} =>{
+            commands::delete::execute(service);
+        }
     }
 }
