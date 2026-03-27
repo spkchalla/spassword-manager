@@ -16,10 +16,10 @@ pub enum CliCommand {
     },
 }
 
-pub fn parse_cli () -> CliCommand {
+pub fn parse_cli() -> CliCommand {
     let args: Vec<String> = env::args().collect();
-    
-    if args.len() <2 {
+
+    if args.len() < 2 {
         panic!("No command provided");
     }
 
@@ -27,7 +27,7 @@ pub fn parse_cli () -> CliCommand {
         "init" => CliCommand::Init,
 
         "add" => {
-            if args.len() !=5 {
+            if args.len() != 5 {
                 panic!("Usage: vault add <service> <username> <password>");
             }
             CliCommand::Add {
@@ -55,6 +55,6 @@ pub fn parse_cli () -> CliCommand {
             }
         }
 
-        _ => panic! ("Unknown command")
+        _ => panic!("Unknown command"),
     }
 }

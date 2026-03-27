@@ -8,19 +8,23 @@ use cli::{CliCommand, parse_cli};
 fn main() {
     let command = parse_cli();
     match command {
-        CliCommand::Init =>{
+        CliCommand::Init => {
             commands::init::execute();
         }
-        CliCommand::Add {service, username, password} =>{
+        CliCommand::Add {
+            service,
+            username,
+            password,
+        } => {
             commands::add::execute(service, username, password);
         }
-        CliCommand::List =>{
+        CliCommand::List => {
             commands::list::execute();
         }
-        CliCommand::Get {service} =>{
+        CliCommand::Get { service } => {
             commands::get::execute(service);
         }
-        CliCommand::Delete {service} =>{
+        CliCommand::Delete { service } => {
             commands::delete::execute(service);
         }
     }
